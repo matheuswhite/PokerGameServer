@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
-import core.net.ClientSocket;
+import core.net.ClientConnection;
 import core.service.NumberGenerator;
 
 public class ServerManager extends Thread {
@@ -33,7 +33,7 @@ public class ServerManager extends Thread {
 	@Override
 	public void run() {
 		Socket connectionSocket = null;
-		ClientSocket t = null;
+		ClientConnection t = null;
 		Client c = null;
 		
 		while (true) {
@@ -42,7 +42,7 @@ public class ServerManager extends Thread {
 				connectionSocket = _welcomeSocket.accept();
 				
 				System.out.println("Trying connect with the client...");
-				t = new ClientSocket(connectionSocket);
+				t = new ClientConnection(connectionSocket);
 				t.connect();
 				
 				System.out.println("Gen a unique client id...");
