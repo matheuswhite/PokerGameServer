@@ -1,4 +1,4 @@
-package core.domain.croupier;
+package core.domain.game;
 
 public enum Suit {
 
