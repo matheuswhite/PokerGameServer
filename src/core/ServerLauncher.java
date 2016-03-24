@@ -12,6 +12,9 @@ public class ServerLauncher {
 		
 		Deck deck = new Deck();
 		
+		System.out.println("Shuffling...");
+		deck.shuffle();
+		
 		while( 0 < deck.size()){
 			System.out.println(deck.getCard().toString());
 		}	

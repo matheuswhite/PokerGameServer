@@ -1,6 +1,7 @@
 package core.domain.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
@@ -54,13 +55,6 @@ public class Deck {
 		return cards.pop();
 	}
 	
-	public void swap(Card A, Card B){
-		Card aux;
-		aux = A;
-		A = B;
-		B = aux;
-	}
-	
 	public void shuffle(){	
 		
 		ArrayList<Card> aux = new ArrayList<>();
@@ -71,7 +65,7 @@ public class Deck {
 		
 		for(int i = aux.size() - 1; i >= 1 ; --i)
 		{
-			swap(aux.get(i),aux.get(ran.nextInt(i)));
+			Collections.swap(aux, i, ran.nextInt(i));
 		}
 		cards.addAll(aux);
 	}
