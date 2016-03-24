@@ -1,4 +1,4 @@
-package core;
+package core.service;
 
 import java.util.LinkedList;
 import java.util.List;
