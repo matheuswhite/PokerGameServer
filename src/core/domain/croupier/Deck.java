@@ -1,4 +1,4 @@
-package croupier;
+package core.domain.croupier;
 
 import java.util.ArrayList;
 import java.util.Random;
