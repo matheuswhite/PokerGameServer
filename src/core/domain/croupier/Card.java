@@ -2,12 +2,12 @@ package core.domain.croupier;
 
 public class Card {
 
-	protected Suit naipe;
+	protected Suit suit;
 	protected int number;
 	
-	protected Card(Suit naipe, int number) {
+	protected Card(Suit suit, int number) {
 		super();
-		this.naipe = naipe;
+		this.suit = suit;
 		this.number = number;
 	}
 	
