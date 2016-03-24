@@ -15,7 +15,7 @@ public enum HandRank {
 	
 	private int _value;
 	
-	HandRank(int value) {
+	private HandRank(int value) {
 		_value = value;
 	}
 	
