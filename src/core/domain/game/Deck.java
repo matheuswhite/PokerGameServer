@@ -11,33 +11,33 @@ public class Deck {
 
 	public Deck() {
 		super();
-		cards = new Stack<>();
+		cards = new Stack<Card>();
 		fillDeck();
 		
 	}
 	
 	public void fillDeck(){
 		
+		cards.clear();
 		for( int i = 0; i < 4 ; ++i)
 		{
-			cards.clear();
 			if(i == 0){
-				for(int j = 0 ; j < 13; ++j){
+				for(int j = 1 ; j <= 13; ++j){
 					cards.add(new Card(Suit.HEARTS, j));
 				}
 			}
-			if(i == 1){
-				for(int j = 0 ; j < 13; ++j){
+			else if(i == 1){
+				for(int j = 1 ; j <= 13; ++j){
 					cards.add(new Card(Suit.SPADES,j));
 				}
 			}
-			if(i == 2){
-				for(int j = 0 ; j < 13; ++j){
+			else if(i == 2){
+				for(int j = 1 ; j <= 13; ++j){
 					cards.add(new Card(Suit.DIAMONDS,j));
 				}
 			}
-			if(i == 3){
-				for(int j = 0 ; j < 13; ++j){
+			else if(i == 3){
+				for(int j = 1 ; j <= 13; ++j){
 					cards.add(new Card(Suit.CLUBS,j));
 				}
 			}
