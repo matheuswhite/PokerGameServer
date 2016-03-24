@@ -1,13 +1,14 @@
 package core.domain.management;
 
+import core.domain.game.PlayerInfo;
 import core.domain.messageHandler.MessageHandler;
 import core.net.ClientSocket;
 
 public class Client {
 	
+	private PlayerInfo _playerInfo;
 	private long _id;
 	private long _currentRoomId;
-	private String _name;
 	private ClientSocket _clientSocket;
 	private Thread _socketThread;
 	private ClientState _clientState;
@@ -23,12 +24,8 @@ public class Client {
 		_clientSocket.addObserver(handler);
 	}
 	
-	public String getName() {
-		return _name;
-	}
-	
-	public void setName(String name) {
-		_name = name;
+	public PlayerInfo getPlayerInfo() {
+		return _playerInfo;
 	}
 	
 	public ClientState getCurrentClientState() {

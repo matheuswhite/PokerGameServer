@@ -3,15 +3,19 @@ package core.domain.management;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.domain.game.GameInfo;
+
 public class Room {
 
 	private long _id;
 	private List<Long> _listOfClientsId;
+	private GameInfo _gameInfo;
 	public final static int ROOM_CAPACITY = 9;
 	
 	public Room(long id) {
 		_id = id;
 		
+		_gameInfo = new GameInfo();
 		_listOfClientsId = new ArrayList<Long>(ROOM_CAPACITY);
 	}
 	
@@ -35,5 +39,9 @@ public class Room {
 	
 	public List<Long> getClients() {
 		return _listOfClientsId;
+	}
+	
+	public GameInfo getGameInfo() {
+		return _gameInfo;
 	}
 }
