@@ -29,7 +29,7 @@ public class Card {
 			case 13:
 				num = "K";
 				break;
-			case 14:
+			case 1:
 				num = "A";
 				break;
 			default:
