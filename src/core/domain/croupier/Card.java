@@ -1,4 +1,4 @@
-package croupier;
+package core.domain.croupier;
 
 public class Card {
 
