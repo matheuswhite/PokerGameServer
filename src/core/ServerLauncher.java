@@ -1,11 +1,14 @@
 package core;
 
 
+import java.io.IOException;
+
 import core.domain.game.Deck;
+import core.domain.management.ServerManager;
 
-public class Main {
+public class ServerLauncher {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		Deck deck = new Deck();
 		
@@ -13,6 +16,7 @@ public class Main {
 			System.out.println(deck.getCard().toString());
 		}	
 		
+		ServerManager manager = new ServerManager();
 	}
 
 }
