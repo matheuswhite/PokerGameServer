@@ -7,14 +7,14 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Observable;
 
-public class ClientSocket extends Observable implements Runnable {
+public class ClientConnection extends Observable implements Runnable {
 	private Socket _socket;
 	private BufferedReader _inputFromClient;
 	private DataOutputStream _outputToClient;
 	
 	public static final String DISCONNECT_MESSAGE = "";
 	
-	public ClientSocket(Socket connectionSocket) {
+	public ClientConnection(Socket connectionSocket) {
 		_socket = connectionSocket;
 	}
 	
@@ -32,13 +32,16 @@ public class ClientSocket extends Observable implements Runnable {
 	}
 	
 	private void listen() throws IOException {
-		String serverMessage = null;
+		String clientMessage = null;
 		
 		System.out.println("Listen from client...");
-		serverMessage = _inputFromClient.readLine();
+		clientMessage = _inputFromClient.readLine();
 			
-		System.out.println("Message from client: " + serverMessage + "\n");
-		notifyObservers(serverMessage);
+		if (clientMessage == null)
+			throw new IOException("Read line null!");
+		
+		System.out.println("Message from client: " + clientMessage + "\n");
+		notifyObservers(clientMessage);
 	}
 	
 	@Override
