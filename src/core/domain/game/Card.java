@@ -36,7 +36,8 @@ public class Card {
 				break;
 			}
 		}
-		return num + "of" + suit.toString();
+		
+		return num + " of " + suit.toString();
 	}
 	
 }
