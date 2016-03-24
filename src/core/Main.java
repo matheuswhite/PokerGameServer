@@ -1,6 +1,7 @@
+package core;
 
 
-import croupier.Deck;
+import core.domain.croupier.Deck;
 
 public class Main {
 
