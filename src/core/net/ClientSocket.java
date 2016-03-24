@@ -32,16 +32,12 @@ public class ClientSocket extends Observable implements Runnable {
 	}
 	
 	private void listen() throws IOException {
-		String checker = null;
 		String serverMessage = null;
 		
-		do {
-			checker = _inputFromClient.readLine();
-			if (checker != null) 
-				serverMessage += checker;
+		System.out.println("Listen from client...");
+		serverMessage = _inputFromClient.readLine();
 			
-		} while (checker != null);
-		
+		System.out.println("Message from client: " + serverMessage + "\n");
 		notifyObservers(serverMessage);
 	}
 	
