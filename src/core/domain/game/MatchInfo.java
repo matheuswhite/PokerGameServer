@@ -1,49 +1,79 @@
 package core.domain.game;
 
-public class GameInfo {
+import core.service.PrefixMultiplier;
+
+public class MatchInfo {
 	
-	private GamePhase _currentGamePhase;
-	private long _currentTurnPlayerId;
-	private long _smallBlindPlayerId;
-	private long _bigBlindPlayerId;
+	private MatchPhase _currentMatchPhase;
+	private Long _currentTurnPlayerId;
+	private Long _smallBlindPlayerId;
+	private Long _bigBlindPlayerId;
 	private Card[] _cardsInTable;
 	private int _numCardsInTable;
 	private Money _smallBlindValue;
+	private Money _minimumBuyIn;
+	private Money _potValue;
 	
-	public GameInfo() {
+	public MatchInfo(Money smallBlindValue, Money minimumBuyIn) {
+		_currentMatchPhase = MatchPhase.PRE_FLOP;
+		_currentTurnPlayerId = null;
+		_smallBlindPlayerId = null;
+		_bigBlindPlayerId = null;
 		_cardsInTable = new Card[5];
 		_numCardsInTable = 0;
+		_smallBlindValue = smallBlindValue;
+		_minimumBuyIn = minimumBuyIn;
+		_potValue = new Money(0, PrefixMultiplier.NONE);
 	}
 	
-	public GamePhase get_currentGamePhase() {
-		return _currentGamePhase;
+	public MatchPhase getCurrentGamePhase() {
+		return _currentMatchPhase;
 	}
-	public void set_currentGamePhase(GamePhase _currentGamePhase) {
-		this._currentGamePhase = _currentGamePhase;
+	public void setCurrentGamePhase(MatchPhase currentGamePhase) {
+		_currentMatchPhase = currentGamePhase;
 	}
-	public long get_currentTurnPlayerId() {
+	
+	public long getCurrentTurnPlayerId() {
 		return _currentTurnPlayerId;
 	}
-	public void set_currentTurnPlayerId(long _currentTurnPlayerId) {
-		this._currentTurnPlayerId = _currentTurnPlayerId;
+	public void setCurrentTurnPlayerId(long currentTurnPlayerId) {
+		_currentTurnPlayerId = currentTurnPlayerId;
 	}
-	public long get_smallBlindPlayerId() {
+	
+	public long getSmallBlindPlayerId() {
 		return _smallBlindPlayerId;
 	}
-	public void set_smallBlindPlayerId(long _smallBlindPlayerId) {
-		this._smallBlindPlayerId = _smallBlindPlayerId;
+	public void setSmallBlindPlayerId(long smallBlindPlayerId) {
+		_smallBlindPlayerId = smallBlindPlayerId;
 	}
-	public long get_bigBlindPlayerId() {
+	
+	public long getBigBlindPlayerId() {
 		return _bigBlindPlayerId;
 	}
-	public void set_bigBlindPlayerId(long _bigBlindPlayerId) {
-		this._bigBlindPlayerId = _bigBlindPlayerId;
+	public void setBigBlindPlayerId(long bigBlindPlayerId) {
+		_bigBlindPlayerId = bigBlindPlayerId;
 	}
-	public Money get_smallBlindValue() {
+	
+	public Money getSmallBlindValue() {
 		return _smallBlindValue;
 	}
-	public void set_smallBlindValue(Money _smallBlindValue) {
-		this._smallBlindValue = _smallBlindValue;
+	
+	public Money getMinimumBuyIn() {
+		return _minimumBuyIn;
+	}
+	
+	public Money getPotValue() {
+		return _potValue;
+	}
+	public void increasePotValue(Money value) {
+		_potValue.addMoney(value);
+	}
+	public void clearPot() {
+		_potValue = new Money(0, PrefixMultiplier.NONE);
+	}
+	
+	public Card[] getCardsInTable() {
+		return _cardsInTable;
 	}
 	public void putCardInTable(Card card) throws Exception {
 		if (_numCardsInTable >= 5)
@@ -56,4 +86,6 @@ public class GameInfo {
 			_cardsInTable[i] = null;
 		}
 	}
+
+	
 }

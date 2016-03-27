@@ -3,19 +3,20 @@ package core.domain.management;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.domain.game.GameInfo;
+import core.domain.game.MatchInfo;
+import core.domain.game.Money;
 
 public class Room {
 
 	private long _id;
 	private List<Long> _listOfClientsId;
-	private GameInfo _gameInfo;
+	private MatchInfo _gameInfo;
 	public final static int ROOM_CAPACITY = 9;
 	
-	public Room(long id) {
+	public Room(long id, Money smallBlindValue, Money minimumBuyIn) {
 		_id = id;
 		
-		_gameInfo = new GameInfo();
+		_gameInfo = new MatchInfo(smallBlindValue, minimumBuyIn);
 		_listOfClientsId = new ArrayList<Long>(ROOM_CAPACITY);
 	}
 	
@@ -41,7 +42,7 @@ public class Room {
 		return _listOfClientsId;
 	}
 	
-	public GameInfo getGameInfo() {
+	public MatchInfo getGameInfo() {
 		return _gameInfo;
 	}
 }

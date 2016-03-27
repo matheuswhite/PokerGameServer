@@ -8,14 +8,16 @@ public class Client {
 	
 	private PlayerInfo _playerInfo;
 	private long _id;
-	private long _currentRoomId;
+	private Long _currentRoomId;
 	private ClientConnection _clientSocket;
 	private Thread _socketThread;
 	private ClientState _clientState;
 	
 	public Client(long id, ClientConnection clientSocket) {
+		_playerInfo = new PlayerInfo();
 		_clientSocket = clientSocket;
 		_id = id;
+		_currentRoomId = null;
 		_socketThread = new Thread(_clientSocket, "Client" + id);
 		_socketThread.start();
 	}
@@ -36,7 +38,7 @@ public class Client {
 		return _id;
 	}
 	
-	public long getCurrentRoomId() {
+	public Long getCurrentRoomId() {
 		return _currentRoomId;
 	}
 	
