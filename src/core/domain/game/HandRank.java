@@ -19,7 +19,7 @@ public enum HandRank {
 		_value = value;
 	}
 	
-	int getValue() {
+	public int getValue() {
 		return _value;
 	}
 }

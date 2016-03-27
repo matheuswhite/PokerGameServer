@@ -1,5 +1,10 @@
 package core.domain.game;
 
-public enum GamePhase {
+public enum MatchPhase {
 
+	PRE_FLOP,
+	FLOP,
+	TURN,
+	RIVER,
+	SHOWDOWN;
 }
