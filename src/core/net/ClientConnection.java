@@ -38,7 +38,7 @@ public class ClientConnection extends Observable implements Runnable {
 		clientMessage = _inputFromClient.readLine();
 			
 		if (clientMessage == null)
-			throw new IOException("Read line null!");
+			throw new IOException("Client disconnected");
 		
 		System.out.println("Message from client: " + clientMessage + "\n");
 		notifyObservers(clientMessage);
