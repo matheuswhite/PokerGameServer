@@ -1,14 +1,12 @@
 package core.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import core.domain.game.Card;
-import core.domain.game.ExtendedHand;
+import core.domain.game.Hand;
 import core.domain.game.HandRank;
 
 public class Algorithms {
@@ -17,257 +15,287 @@ public class Algorithms {
 	private List<Card> _spades;
 	private List<Card> _diamonds;
 	private List<Card> _clubs;
-	private Map<Integer, Integer> _amountOfEachCard;
+	private int[] _amountOfEachCard;
+	private List<Card> _listOfCards;
 	
 	public Algorithms() {
 		_hearts = new LinkedList<Card>();
 		_spades = new LinkedList<Card>();
 		_diamonds = new LinkedList<Card>();
 		_clubs = new LinkedList<Card>();
-		_amountOfEachCard = new HashMap<Integer, Integer>();
+		_amountOfEachCard = new int[13];
+		_listOfCards = new ArrayList<Card>();
 	}
-	
-	public HandRank checkHandRank(ExtendedHand hand) {
-		
+
+	public void evaluateHand(Hand hand) {
+		_listOfCards.clear();
+		_listOfCards.addAll(Arrays.asList(hand.getTableCards()));
+		_listOfCards.addAll(Arrays.asList(hand.getPlayerCards()));
+		_listOfCards.sort((o1,o2) -> o2.compareTo(o1));
+
 		if (isFlush(hand)) {
-			if (isStraight(hand)) {
+			if (isStraight(hand, true)) {
 				if (hasAs(hand)) {
-					return HandRank.ROYAL_FLUSH;
+					hand.setHandRank(HandRank.ROYAL_FLUSH);
 				}
 				else {
-					return HandRank.STRAIGHT_FLUSH;
+					hand.setHandRank(HandRank.STRAIGHT_FLUSH);
 				}
 			}
 			else {
-				return HandRank.FLUSH;
+				hand.setHandRank(HandRank.FLUSH);
 			}
 		}
-		else {
-			if (isStraight(hand)) {
-				return HandRank.STRAIGHT;
+		else if (isStraight(hand, false)) {
+			hand.setHandRank(HandRank.STRAIGHT);
+		}
+		else if (hasFourOfaKind(hand)) {
+			hand.setHandRank(HandRank.FOUR_OF_A_KIND);
+		}
+		else if (hasFullHouse(hand)) {
+			hand.setHandRank(HandRank.FULL_HOUSE);
+		}
+		else if (hasThreeOfaKind(hand)) {
+			hand.setHandRank(HandRank.THREE_OF_A_KIND);
+		}
+		else if (hasTwoPair(hand)) {
+			hand.setHandRank(HandRank.TWO_PAIR);
+		}
+		else if (hasOnePair(hand)) {
+			hand.setHandRank(HandRank.ONE_PAIR);
+		}
+
+		hand.setHandRank(HandRank.HIGH_CARD);
+	}
+	
+	public void countingCards(Hand hand) {
+		for (int i = 0; i < 13; i++) {
+			_amountOfEachCard[i] = 0;
+		}
+
+		for (Card card : _listOfCards) {
+			_amountOfEachCard[card.getNumber()-1]++;
+		}
+	}
+	
+	public boolean hasFullHouse(Hand hand) {
+		countingCards(hand);
+
+		int highPairCardValue = -1;
+		int highTOAKCardValue = -1;
+		boolean outPair = false;
+		boolean outTOAK = false;
+
+		for (int i = 0; i < 13; i++) {
+			if (_amountOfEachCard[i] == 2 && highPairCardValue != 1) {
+				highPairCardValue = i+1;
+				outPair = true;
 			}
-			else {
-				if (hasFourOfaKind(hand)) {
-					return HandRank.FOUR_OF_A_KIND;
+			else if (_amountOfEachCard[i] == 3 && highTOAKCardValue != 1) {
+				highTOAKCardValue = i+1;
+				outTOAK = true;
+			}
+		}
+		
+		if (outPair && outTOAK) {
+			List<Card> aux = new ArrayList<Card>();
+			Card highPairCard = null;
+			Card highTOAKCard = null;
+			for (int j = 0; j < 7; j++) {
+				if (_listOfCards.get(j).getNumber() == highPairCardValue) {
+					highPairCard = _listOfCards.get(j);
+				}
+				else if (_listOfCards.get(j).getNumber() == highTOAKCardValue) {
+					highTOAKCard = _listOfCards.get(j);
+				}
+			}
+			
+			aux.add(highPairCard);
+			hand.setHighCard(highTOAKCard);
+			hand.setKickers(aux);
+		}
+
+		return outPair && outTOAK;
+	}
+	
+	public boolean hasTwoPair(Hand hand) {
+		countingCards(hand);
+
+		int highPairCardValue = -1;
+		int secondHighPairCardValue = -1;
+		boolean out1 = false;
+		boolean out2 = false;
+
+		for (int i = 0; i < 13; i++) {
+			if (_amountOfEachCard[i] == 2) {
+				if (highPairCardValue==-1) {
+					highPairCardValue = i+1;
+					out1 = true;
 				}
 				else {
-					if (hasThreeOfaKind(hand)) {
-						if (hasOnePair(hand)) {
-							return HandRank.FULL_HOUSE;
-						}
-						else {
-							return HandRank.THREE_OF_A_KIND;
-						}
+					if (highPairCardValue!=1) {
+						secondHighPairCardValue = highPairCardValue;
+						highPairCardValue = i+1;
 					}
 					else {
-						if (hasTwoPair(hand)) {
-							return HandRank.TWO_PAIR;
-						}
-						else {
-							if (hasOnePair(hand)) {
-								return HandRank.ONE_PAIR;
-							}
-						}
+						secondHighPairCardValue = i+1;
+					}
+					out2 = true;
+				}
+			}
+		}
+		
+		if (out1 && out2) {
+			List<Card> aux = new ArrayList<Card>(_listOfCards);
+			Card highCard = null;
+			Card secondHighCard = null;
+			for (int j = 0; j < 7; j++) {
+				if (_listOfCards.get(j).getNumber() == highPairCardValue) {
+					highCard = aux.remove(j);
+				}
+				else if (_listOfCards.get(j).getNumber() == secondHighPairCardValue) {
+					secondHighCard = aux.remove(j);
+				}
+			}
+			
+			aux.remove(1);
+			aux.remove(2);
+			aux.add(0,secondHighCard);
+			hand.setHighCard(highCard);
+			hand.setKickers(aux);
+		}
+
+		return out1 && out2;
+	}
+
+	public boolean hasOnePair(Hand hand) {
+		countingCards(hand);
+		
+		int highPairCardValue = -1;
+		boolean out = false;
+		
+		for (int i = 0; i < 13; i++) {
+			if (_amountOfEachCard[i] == 2) {
+				highPairCardValue = i+1;
+				out = true;
+				if (i==0) i=14;
+			}
+		}
+		
+		if (out) {
+			List<Card> aux = new ArrayList<Card>(_listOfCards);
+			Card highCard = null;
+			for (int j = 0; j < 7; j++) {
+				if (_listOfCards.get(j).getNumber() == highPairCardValue) {
+					highCard = aux.remove(j);
+				}
+			}
+			
+			aux.remove(3);
+			aux.remove(4);
+			hand.setHighCard(highCard);
+			hand.setKickers(aux);
+		}
+		
+		return out;
+	}
+
+	public boolean hasThreeOfaKind(Hand hand) {
+		countingCards(hand);
+
+		int highTOAKCardValue = -1;
+		boolean out = false;
+
+		for (int i = 0; i < 13; i++) {
+			if (_amountOfEachCard[i] == 3) {
+				highTOAKCardValue = i+1;
+				out = true;
+				if (i==0) i=14;
+			}
+		}
+
+		if (out) {
+			List<Card> aux = new ArrayList<Card>(_listOfCards);
+			Card highCard = null;
+			for (int j = 0; j < 7; j++) {
+				if (_listOfCards.get(j).getNumber() == highTOAKCardValue) {
+					highCard = aux.remove(j);
+				}
+			}
+			
+			aux.remove(2);
+			aux.remove(3);
+			hand.setHighCard(highCard);
+			hand.setKickers(aux);
+		}
+
+		return out;
+	}
+
+	public boolean hasFourOfaKind(Hand hand) {
+		countingCards(hand);
+
+		List<Card> aux = new ArrayList<Card>(_listOfCards);
+		Card highCard = null;
+		for (int i = 0; i < 13; i++) {
+			if (_amountOfEachCard[i] == 4) {
+				
+				for (int j = 0; j < 7; j++) {
+					if (_listOfCards.get(j).getNumber() == i+1) {
+						highCard = aux.remove(j);
 					}
 				}
-			}
-		}
-		
-		return HandRank.HIGH_CARD;
-	}
-	
-	public void countingCards(ExtendedHand hand) {
-		_amountOfEachCard.clear();
-		for (int i = 1; i <= 13; i++) {
-			_amountOfEachCard.put(i, 0);
-		}
-		
-		for (Card card : hand.getCards()) {
-			Integer amount = _amountOfEachCard.get(card.getNumber());
-			amount++;
-		}
-	}
-	
-	public boolean hasTwoPair(ExtendedHand hand) {
-		countingCards(hand);
-
-		int highPairCardValue = 0;
-		int secondHighPairCardValue = 0;
-		boolean out = false;
-
-		for (int i = 1; i <= 13; i++) {
-			if (_amountOfEachCard.get(i) == 2) {
-				if (highPairCardValue != 0) {
-					secondHighPairCardValue = highPairCardValue;
-					out = true;
-				}
-				highPairCardValue = i;
-			}
-		}
-
-		if (out) {
-			Card[] highCards = new Card[7];
-
-			int j = 0;
-			int k = 2;
-			int l = 4;
-			for (int i = 0; i < 7; i++) {
-				Card card = hand.getCards()[i];
-				if (card.getNumber() == highPairCardValue) {
-					highCards[j] = card;
-					j++;
-				}
-				else if (card.getNumber() == secondHighPairCardValue) {
-					highCards[k] = card;
-					k++;
-				}
-				else {
-					highCards[l] = card;
-					l++;
-				}
-			}
-
-			hand.setHighCards(highCards);
-		}
-
-		return out;
-	}
-
-	public boolean hasOnePair(ExtendedHand hand) {
-		countingCards(hand);
-		
-		int highPairCardValue = 0;
-		boolean out = false;
-		
-		for (int i = 1; i <= 13; i++) {
-			if (_amountOfEachCard.get(i) == 2) {
-				highPairCardValue = i;
-				out = true;
-			}
-		}
-		
-		if (out) {
-			Card[] highCards = new Card[7];
-			
-			int j = 0;
-			int k = 2;
-			for (int i = 0; i < 7; i++) {
-				Card card = hand.getCards()[i];
-				if (card.getNumber() == highPairCardValue) {
-					highCards[j] = card;
-					j++;
-				}
-				else {
-					highCards[k] = card;
-					k++;
-				}
-			}
-			
-			hand.setHighCards(highCards);
-		}
-		
-		return out;
-	}
-
-	public boolean hasThreeOfaKind(ExtendedHand hand) {
-		countingCards(hand);
-
-		int highTOAKCardValue = 0;
-		boolean out = false;
-
-		for (int i = 1; i <= 13; i++) {
-			if (_amountOfEachCard.get(i) == 3) {
-				highTOAKCardValue = i;
-				out = true;
-			}
-		}
-
-		if (out) {
-			Card[] highCards = new Card[7];
-
-			int j = 0;
-			int k = 3;
-			for (int i = 0; i < 7; i++) {
-				Card card = hand.getCards()[i];
-				if (card.getNumber() == highTOAKCardValue) {
-					highCards[j] = card;
-					j++;
-				}
-				else {
-					highCards[k] = card;
-					k++;
-				}
-			}
-			
-			hand.setHighCards(highCards);
-		}
-
-		return out;
-	}
-
-	public boolean hasFourOfaKind(ExtendedHand hand) {
-		countingCards(hand);
-
-		int highFOAKCardValue = 0;
-		boolean out = false;
-
-		for (int i = 1; i <= 13; i++) {
-			if (_amountOfEachCard.get(i) == 4) {
-				highFOAKCardValue = i;
-				out = true;
-				i = 14;
-			}
-		}
-
-		if (out) {
-			Card[] highCards = new Card[7];
-
-			int j = 0;
-			int k = 4;
-			for (int i = 0; i < 7; i++) {
-				Card card = hand.getCards()[i];
-				if (card.getNumber() == highFOAKCardValue) {
-					highCards[j] = card;
-					j++;
-				}
-				else {
-					highCards[k] = card;
-					k++;
-				}
-			}
-			
-			hand.setHighCards(highCards);
-		}
-
-		return out;
-	}
-
-	public boolean hasAs(ExtendedHand hand) {
-		for (Card card : hand.getCards()) {
-			if (card.getNumber() == 1) {	
 				
-				Arrays.sort(hand.getCards(), Collections.reverseOrder());
-				hand.setHighCards(hand.getCards());
+				aux.remove(1);
+				aux.remove(2);
+				hand.setHighCard(highCard);
+				hand.setKickers(aux);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public boolean hasAs(Hand hand) {
+		for (Card card : _listOfCards) {
+			if (card.getNumber() == 1) {	
+				hand.setHighCard(card);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public boolean isStraight(ExtendedHand hand) {
+	public boolean isStraight(Hand hand, boolean isFlush) {
+		Card highCard = _listOfCards.get(0);
 		
+		for (int i = 1; i < 7; i++) {
+			Card other = _listOfCards.get(i);
+			if (highCard.isSuccessor(other)){
+				if (isFlush) {
+					if (!highCard.getSuit().equals(other)){
+						return false;
+					}
+				}
+			}
+			else {
+				return false;
+			}
+		}
 		
-		return false;
+		hand.setHighCard(highCard);
+		return true;
 	}
 
-	public boolean isFlush(ExtendedHand hand) {
+	public boolean isFlush(Hand hand) {
 		boolean out = false;
 		_hearts.clear();
 		_spades.clear();
 		_diamonds.clear();
 		_clubs.clear();
 		
-		for (Card card : hand.getCards()) {
+		for (Card card : _listOfCards) {
 			
 			switch (card.getSuit()) {
 			case HEARTS:
@@ -288,23 +316,27 @@ public class Algorithms {
 		}
 		
 		if (_hearts.size() >= 5) {
-			Collections.sort(_hearts, Collections.reverseOrder());
-			hand.setHighCards((Card[])_hearts.toArray());
+			_hearts.sort((o1,o2) -> o2.compareTo(o1));
+			hand.setHighCard(_hearts.remove(0));
+			hand.setKickers(_hearts);
 			out = true;
 		}
 		else if (_spades.size() >= 5) {
-			Collections.sort(_spades, Collections.reverseOrder());
-			hand.setHighCards((Card[])_spades.toArray());
+			_spades.sort((o1,o2) -> o2.compareTo(o1));
+			hand.setHighCard(_spades.remove(0));
+			hand.setKickers(_spades);
 			out = true;
 		}
 		else if (_diamonds.size() >= 5) {
-			Collections.sort(_diamonds, Collections.reverseOrder());
-			hand.setHighCards((Card[])_diamonds.toArray());
+			_diamonds.sort((o1,o2) -> o2.compareTo(o1));
+			hand.setHighCard(_diamonds.remove(0));
+			hand.setKickers(_diamonds);
 			out = true;
 		}
 		else if (_clubs.size() >= 5) {
-			Collections.sort(_clubs, Collections.reverseOrder());
-			hand.setHighCards((Card[])_clubs.toArray());
+			_clubs.sort((o1,o2) -> o2.compareTo(o1));
+			hand.setHighCard(_clubs.remove(0));
+			hand.setKickers(_clubs);
 			out = true;
 		}
 		return out;
