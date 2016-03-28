@@ -11,6 +11,19 @@ public class Card {
 		this.number = number;
 	}
 	
+	public int compareTo(Card other) {
+		int myNum = number;
+		int otherNum = other.getNumber();
+		if (myNum == 1) myNum = 14;
+		return myNum - otherNum;
+	}
+	
+	public boolean isSuccessor(Card other) {
+		if (number == 1 || number > other.getNumber())
+			return false;
+		return true;
+	}
+	
 	public Suit getSuit() {
 		return suit;
 	}
@@ -47,5 +60,4 @@ public class Card {
 		
 		return num + " of " + suit.toString();
 	}
-	
 }
