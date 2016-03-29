@@ -14,12 +14,13 @@ public class Card {
 	public int compareTo(Card other) {
 		int myNum = number;
 		int otherNum = other.getNumber();
+		if (otherNum == 1) otherNum = 14;
 		if (myNum == 1) myNum = 14;
 		return myNum - otherNum;
 	}
 	
-	public boolean isSuccessor(Card other) {
-		if (number == 1 || number > other.getNumber())
+	public boolean isPredecessor(Card other) {
+		if (number == 2 || (number < other.getNumber() && number != 1))
 			return false;
 		return true;
 	}
@@ -30,6 +31,11 @@ public class Card {
 	
 	public int getNumber() {
 		return number;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return number == ((Card)obj).getNumber() && suit.equals(((Card)obj).getSuit());
 	}
 	
 	@Override
