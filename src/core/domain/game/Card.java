@@ -20,9 +20,14 @@ public class Card {
 	}
 	
 	public boolean isPredecessor(Card other) {
-		if (number == 2 || (number < other.getNumber() && number != 1))
-			return false;
-		return true;
+		int myNum = number;
+		int otherNum = other.getNumber();
+		if (otherNum == 1) otherNum = 14;
+		if (myNum == 1) myNum = 14;
+		
+		if (myNum - otherNum == 1)
+			return true;
+		return false;
 	}
 	
 	public Suit getSuit() {

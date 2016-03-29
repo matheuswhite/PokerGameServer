@@ -224,7 +224,7 @@ public class AlgorithmTest {
 		_algorithms.evaluateHand(hand);
 		
 		assertEquals(HandRank.HIGH_CARD, hand.getHandRank());
-		assertEquals(new Card(Suit.HEARTS, 12), hand.getHighCard().getNumber());
+		assertEquals(new Card(Suit.HEARTS, 12), hand.getHighCard());
 		assertEquals(new Card(Suit.DIAMONDS, 11), hand.getKickers().get(0));
 		assertEquals(new Card(Suit.DIAMONDS, 9), hand.getKickers().get(1));
 		assertEquals(new Card(Suit.CLUBS, 7), hand.getKickers().get(2));

@@ -166,12 +166,14 @@ public class Algorithms {
 			Card secondHighCard = null;
 			int size = 7;
 			for (int j = 0; j < size; j++) {
-				if (_listOfCards.get(j).getNumber() == highPairCardValue) {
+				if (aux.get(j).getNumber() == highPairCardValue) {
 					highCard = aux.remove(j);
+					j--;
 					size--;
 				}
-				else if (_listOfCards.get(j).getNumber() == secondHighPairCardValue) {
+				else if (aux.get(j).getNumber() == secondHighPairCardValue) {
 					secondHighCard = aux.remove(j);
+					j--;
 					size--;
 				}
 			}
@@ -205,8 +207,9 @@ public class Algorithms {
 			Card highCard = null;
 			int size = 7;
 			for (int j = 0; j < size; j++) {
-				if (_listOfCards.get(j).getNumber() == highPairCardValue) {
+				if (aux.get(j).getNumber() == highPairCardValue) {
 					highCard = aux.remove(j);
+					j--;
 					size--;
 				}
 			}
@@ -239,8 +242,9 @@ public class Algorithms {
 			Card highCard = null;
 			int size = 7;
 			for (int j = 0; j < size; j++) {
-				if (_listOfCards.get(j).getNumber() == highTOAKCardValue) {
+				if (aux.get(j).getNumber() == highTOAKCardValue) {
 					highCard = aux.remove(j);
+					j--;
 					size--;
 				}
 			}
@@ -264,8 +268,9 @@ public class Algorithms {
 				
 				int size = 7;
 				for (int j = 0; j < size; j++) {
-					if (_listOfCards.get(j).getNumber() == i+1) {
+					if (aux.get(j).getNumber() == i+1) {
 						highCard = aux.remove(j);
+						j--;
 						size--;
 					}
 				}
@@ -293,39 +298,36 @@ public class Algorithms {
 
 	public boolean isStraight(Hand hand, boolean isFlush) {
 		Card highCard = null;
-		boolean out = true;
+		int k = 0;
 		
 		for (int j = 0; j < 3; j++) {
 			highCard = _listOfCards.get(j);
 			Card prev = highCard;
+			k = 0;
 			
 			for (int i = j+1; i < 7; i++) {
 				Card other = _listOfCards.get(i);
 				if (prev.isPredecessor(other)){
 					if (isFlush) {
-						if (!highCard.getSuit().equals(other.getSuit())){
-							out = false;
-						}
-						else {
-							out = true;
+						if (highCard.getSuit().equals(other.getSuit())){
+							k++;
+							prev = other;
 						}
 					}
+					else {
+						k++;
+						prev = other;
+					}
 				}
-				else {
-					out = false;
-					i = 8;
+				
+				if (k == 4) {
+					hand.setHighCard(highCard);
+					return true;
 				}
-				//System.out.println(prev.toString() + "|" + other.toString() + "|" + out);
-				prev = other;
-			}
-			//System.out.println("");
-			if (out) {
-				hand.setHighCard(highCard);
-				j=4;
 			}
 		}
 		
-		return out;
+		return false;
 	}
 
 	public boolean isFlush(Hand hand) {
