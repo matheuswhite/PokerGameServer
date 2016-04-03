@@ -39,6 +39,6 @@ public class Message {
 	
 	public String getJsonString() {
 		Gson gson = new Gson();
-		return gson.toJson(this);
+		return gson.toJson(this) + "\n";
 	}
 }

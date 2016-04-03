@@ -27,8 +27,8 @@ public class ClientConnection extends Observable implements Runnable {
 		_socket.close();
 	}
 	
-	public void write(String message) throws IOException {
-		_outputToClient.writeBytes(message);
+	public void write(Message message) throws IOException {
+		_outputToClient.writeBytes(message.getJsonString());
 	}
 	
 	private void listen() throws IOException {
@@ -41,7 +41,7 @@ public class ClientConnection extends Observable implements Runnable {
 			throw new IOException("Client disconnected");
 		
 		System.out.println("Message from client: " + clientMessage + "\n");
-		notifyObservers(clientMessage);
+		notifyObservers(new Message(clientMessage));
 	}
 	
 	@Override
