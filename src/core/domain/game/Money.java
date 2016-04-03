@@ -7,6 +7,11 @@ public class Money {
 	private double _value;
 	private PrefixMultiplier _prefixMultiplier;
 	
+	public Money() {
+		_value = 0;
+		_prefixMultiplier = PrefixMultiplier.NONE;
+	}
+	
 	public Money(double value, PrefixMultiplier prefixMultiplier) {
 		if (_value >= 1000)
 			throw new IllegalArgumentException("The value must be less that 1000");

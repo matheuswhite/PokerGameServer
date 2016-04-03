@@ -2,7 +2,7 @@ package core.domain.game;
 
 import core.service.PrefixMultiplier;
 
-public class MatchInfo {
+public class MatchInfo{
 	
 	private MatchPhase _currentMatchPhase;
 	private Long _currentTurnPlayerId;
@@ -14,23 +14,29 @@ public class MatchInfo {
 	private Money _minimumBuyIn;
 	private Money _potValue;
 	
-	public MatchInfo(Money smallBlindValue, Money minimumBuyIn) {
+	public MatchInfo() {
 		_currentMatchPhase = MatchPhase.PRE_FLOP;
 		_currentTurnPlayerId = null;
 		_smallBlindPlayerId = null;
 		_bigBlindPlayerId = null;
 		_cardsInTable = new Card[5];
 		_numCardsInTable = 0;
-		_smallBlindValue = smallBlindValue;
-		_minimumBuyIn = minimumBuyIn;
-		_potValue = new Money(0, PrefixMultiplier.NONE);
+		_smallBlindValue = new Money();
+		_minimumBuyIn = new Money();
+		_potValue = new Money();
 	}
 	
-	public MatchPhase getCurrentGamePhase() {
+	public MatchInfo(Money smallBlindValue, Money minimumBuyIn) {
+		this();
+		_smallBlindValue = smallBlindValue;
+		_minimumBuyIn = minimumBuyIn;
+	}
+	
+	public MatchPhase getCurrentMatchPhase() {
 		return _currentMatchPhase;
 	}
-	public void setCurrentGamePhase(MatchPhase currentGamePhase) {
-		_currentMatchPhase = currentGamePhase;
+	public void setCurrentMatchPhase(MatchPhase currentMatchPhase) {
+		_currentMatchPhase = currentMatchPhase;
 	}
 	
 	public long getCurrentTurnPlayerId() {
@@ -86,6 +92,4 @@ public class MatchInfo {
 			_cardsInTable[i] = null;
 		}
 	}
-
-	
 }

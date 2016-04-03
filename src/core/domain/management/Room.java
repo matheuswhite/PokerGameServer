@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.domain.game.MatchInfo;
-import core.domain.game.Money;
 
 public class Room {
 
 	private long _id;
 	private List<Long> _listOfClientsId;
-	private MatchInfo _gameInfo;
+	private MatchInfo _matchInfo;
 	public final static int ROOM_CAPACITY = 9;
 	
-	public Room(long id, Money smallBlindValue, Money minimumBuyIn) {
+	public Room() {
+		_id = 0;
+		_matchInfo = null;
+		_listOfClientsId = null;
+	}
+	
+	public Room(long id, MatchInfo matchInfo) {
 		_id = id;
-		
-		_gameInfo = new MatchInfo(smallBlindValue, minimumBuyIn);
+		_matchInfo = matchInfo;
 		_listOfClientsId = new ArrayList<Long>(ROOM_CAPACITY);
 	}
 	
@@ -43,6 +47,6 @@ public class Room {
 	}
 	
 	public MatchInfo getGameInfo() {
-		return _gameInfo;
+		return _matchInfo;
 	}
 }
