@@ -41,7 +41,9 @@ public class ClientConnection extends Observable implements Runnable {
 			throw new IOException("Client disconnected");
 		
 		System.out.println("Message from client: " + clientMessage + "\n");
+		setChanged();
 		notifyObservers(new Message(clientMessage));
+		
 	}
 	
 	@Override
