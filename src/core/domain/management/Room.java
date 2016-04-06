@@ -4,49 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.domain.game.MatchInfo;
+import core.domain.game.Money;
+import core.domain.game.PlayerInfo;
 
 public class Room {
 
 	private long _id;
-	private List<Long> _listOfClientsId;
+	private List<PlayerInfo> _listOfPlayers;
 	private MatchInfo _matchInfo;
-	public final static int ROOM_CAPACITY = 9;
+	public final static int ROOM_CAPACITY = 6;
 	
-	public Room() {
-		_id = 0;
-		_matchInfo = null;
-		_listOfClientsId = null;
-	}
-	
-	public Room(long id, MatchInfo matchInfo) {
+	public Room(long id, Money smallBlindValue, Money minimumBuyIn) {
 		_id = id;
-		_matchInfo = matchInfo;
-		_listOfClientsId = new ArrayList<Long>(ROOM_CAPACITY);
+		_matchInfo = new MatchInfo(smallBlindValue, minimumBuyIn);
+		_listOfPlayers = new ArrayList<PlayerInfo>(ROOM_CAPACITY);
 	}
 	
 	public long getId() {
 		return _id;
 	}
 	
-	public boolean hasClient(long id) {
-		return _listOfClientsId.contains(id);
-	}
-	
-	public void addClient(long id) throws Exception {
-		if (_listOfClientsId.size() >= ROOM_CAPACITY)
+	public void addPlayer(PlayerInfo player) throws Exception {
+		if (_listOfPlayers.size() >= ROOM_CAPACITY)
 			throw new Exception("The max capacity of the room has been reached!");
-		_listOfClientsId.add(id);
+		_listOfPlayers.add(player);	
+	}
+	public void removePlayer(PlayerInfo player) {
+		_listOfPlayers.remove(player);
+	}
+	public List<PlayerInfo> getPlayers() {
+		return _listOfPlayers;
 	}
 	
-	public void removeClient(long id) {
-		_listOfClientsId.remove(id);
-	}
-	
-	public List<Long> getClients() {
-		return _listOfClientsId;
-	}
-	
-	public MatchInfo getGameInfo() {
+	public MatchInfo getMatchInfo() {
 		return _matchInfo;
 	}
 }

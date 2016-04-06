@@ -5,9 +5,9 @@ import core.service.PrefixMultiplier;
 public class MatchInfo{
 	
 	private MatchPhase _currentMatchPhase;
-	private Long _currentTurnPlayerId;
-	private Long _smallBlindPlayerId;
-	private Long _bigBlindPlayerId;
+	private PlayerInfo _currentTurnPlayer;
+	private PlayerInfo _smallBlindPlayer;
+	private PlayerInfo _bigBlindPlayer;
 	private Card[] _cardsInTable;
 	private int _numCardsInTable;
 	private Money _smallBlindValue;
@@ -16,9 +16,9 @@ public class MatchInfo{
 	
 	public MatchInfo() {
 		_currentMatchPhase = MatchPhase.PRE_FLOP;
-		_currentTurnPlayerId = null;
-		_smallBlindPlayerId = null;
-		_bigBlindPlayerId = null;
+		_currentTurnPlayer = null;
+		_smallBlindPlayer = null;
+		_bigBlindPlayer = null;
 		_cardsInTable = new Card[5];
 		_numCardsInTable = 0;
 		_smallBlindValue = new Money();
@@ -39,25 +39,25 @@ public class MatchInfo{
 		_currentMatchPhase = currentMatchPhase;
 	}
 	
-	public long getCurrentTurnPlayerId() {
-		return _currentTurnPlayerId;
+	public PlayerInfo getCurrentTurnPlayer() {
+		return _currentTurnPlayer;
 	}
-	public void setCurrentTurnPlayerId(long currentTurnPlayerId) {
-		_currentTurnPlayerId = currentTurnPlayerId;
-	}
-	
-	public long getSmallBlindPlayerId() {
-		return _smallBlindPlayerId;
-	}
-	public void setSmallBlindPlayerId(long smallBlindPlayerId) {
-		_smallBlindPlayerId = smallBlindPlayerId;
+	public void setCurrentTurnPlayer(PlayerInfo currentTurnPlayer) {
+		_currentTurnPlayer = currentTurnPlayer;
 	}
 	
-	public long getBigBlindPlayerId() {
-		return _bigBlindPlayerId;
+	public PlayerInfo getSmallBlindPlayer() {
+		return _smallBlindPlayer;
 	}
-	public void setBigBlindPlayerId(long bigBlindPlayerId) {
-		_bigBlindPlayerId = bigBlindPlayerId;
+	public void setSmallBlindPlayer(PlayerInfo smallBlindPlayer) {
+		_smallBlindPlayer = smallBlindPlayer;
+	}
+	
+	public PlayerInfo getBigBlindPlayer() {
+		return _bigBlindPlayer;
+	}
+	public void setBigBlindPlayer(PlayerInfo bigBlindPlayer) {
+		_bigBlindPlayer = bigBlindPlayer;
 	}
 	
 	public Money getSmallBlindValue() {
