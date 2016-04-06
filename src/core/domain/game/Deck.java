@@ -11,7 +11,6 @@ public class Deck {
 	private Stack<Card> cards;
 
 	public Deck() {
-		super();
 		cards = new Stack<Card>();
 		fillDeck();
 		

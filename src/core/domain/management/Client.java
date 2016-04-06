@@ -6,17 +6,17 @@ import core.net.ClientConnection;
 
 public class Client {
 	
-	private PlayerInfo _playerInfo;
 	private long _id;
+	private PlayerInfo _playerInfo;
 	private Long _currentRoomId;
 	private ClientConnection _clientSocket;
 	private Thread _socketThread;
 	private ClientState _clientState;
 	
 	public Client(long id, ClientConnection clientSocket) {
-		_playerInfo = new PlayerInfo();
-		_clientSocket = clientSocket;
 		_id = id;
+		_playerInfo = new PlayerInfo(id);
+		_clientSocket = clientSocket;
 		_currentRoomId = null;
 		_socketThread = new Thread(_clientSocket, "Client" + id);
 		_socketThread.start();

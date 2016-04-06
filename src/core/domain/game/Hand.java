@@ -18,8 +18,6 @@ public class Hand {
 		_tableCards = tableCards;
 		_playerCards = playerCards;
 		_kickers = new LinkedList<Card>();
-		//System.arraycopy(tableCards, 0, _allCards, 0, 5);
-		//System.arraycopy(playerCards, 0, _allCards, 5, 2);
 	}
 	
 	public Card[] getTableCards() {
