@@ -12,6 +12,18 @@ public class GetRooms extends MessageHandler {
 		if (!_message.getHandler().equals("get_rooms") || _message.getVersion() != 1.0) {
 			return ;
 		}
+		if (!_message.getHandler().equals("RAISE") || _message.getVersion() != 1.0) {
+			return ;
+		}
+		if (!_message.getHandler().equals("CALL") || _message.getVersion() != 1.0) {
+			return ;
+		}
+		if (!_message.getHandler().equals("FOLD") || _message.getVersion() != 1.0) {
+			return ;
+		}
+		if (!_message.getHandler().equals("CHECK") || _message.getVersion() != 1.0) {
+			return ;
+		}
 		
 		System.out.println("Handler " + GetRooms.class.getName());
 		System.out.println("Handled: " + _message.getJsonString());
