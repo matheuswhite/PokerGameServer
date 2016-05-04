@@ -12,8 +12,6 @@ public class ClientConnection extends Observable implements Runnable {
 	private BufferedReader _inputFromClient;
 	private DataOutputStream _outputToClient;
 	
-	public static final String DISCONNECT_MESSAGE = "";
-	
 	public ClientConnection(Socket connectionSocket) {
 		_socket = connectionSocket;
 	}
@@ -40,7 +38,6 @@ public class ClientConnection extends Observable implements Runnable {
 		if (clientMessage == null)
 			throw new IOException("Client disconnected");
 		
-		System.out.println("Message from client: " + clientMessage + "\n");
 		setChanged();
 		notifyObservers(new Message(clientMessage));
 		
@@ -57,6 +54,11 @@ public class ClientConnection extends Observable implements Runnable {
 				exit = true;
 			}
 		}
-		notifyObservers(DISCONNECT_MESSAGE);
+		createDisconnectMessage();
+	}
+	
+	private void createDisconnectMessage() {
+		Message message = new Message(1.0, "DISCONNECT_MESSAGE", null);
+		notifyObservers(message);
 	}
 }
