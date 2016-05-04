@@ -6,6 +6,12 @@ import core.net.Message;
 
 public class FoldReceiver extends MessageHandler {
 	
+	boolean _inGame;
+	
+	public FoldReceiver(boolean inGame) {
+		_inGame = inGame;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		_message = (Message) arg;
@@ -13,7 +19,7 @@ public class FoldReceiver extends MessageHandler {
 			return ;
 		}
 		
-		System.out.println("Handler " + FoldReceiver.class.getName());
-		System.out.println("Handled: " + _message.getJsonString());
+		_inGame = false;
+		
 	}
 }
