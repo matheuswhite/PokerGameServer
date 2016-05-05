@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import core.domain.messageHandler.EchoReciver;
 import core.net.ClientConnection;
 import core.service.NumberGenerator;
 
@@ -27,7 +28,7 @@ public class ServerManager extends Thread {
 	}
 	
 	private void createClientHandlers(Client client) {
-		
+		client.addMessageHandler(new EchoReciver(client.getClientSocket()));
 	}
 	
 	@Override
