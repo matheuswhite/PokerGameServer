@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import core.domain.game.Money;
 import core.net.ClientConnection;
 import core.service.NumberGenerator;
 
@@ -24,6 +25,12 @@ public class ServerManager extends Thread {
 		
 		_welcomeSocket = new java.net.ServerSocket(1095);
 		this.start();
+	}
+	
+	public void createRoom(Money smallBlindValue, Money minimumBuyIn){
+		long id = _numGenRoom.genId();
+		_listOfRooms.put(id, new Room(id, smallBlindValue, minimumBuyIn));
+		
 	}
 	
 	@Override
