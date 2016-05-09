@@ -35,6 +35,9 @@ public class ServerManager extends Thread {
 	public Room getRoom(long id){
 		return _listOfRooms.get(id);
 	}
+	public Map<Long, Room> getAllRooms(){
+		return _listOfRooms;
+	}
 	public Client getClient(long id){
 		return _listOfClients.get(id);
 	}

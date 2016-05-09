@@ -16,6 +16,8 @@ public class EnterRoomHandler extends Handler {
 		
 		try{
 			server.getRoom(roomID).addPlayer(server.getClient(playerID).getPlayerInfo());
+			
+			
 		}catch(Exception e){
 			
 		}
