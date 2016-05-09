@@ -5,9 +5,11 @@ import java.util.List;
 
 import core.domain.management.ServerManager;
 import core.handler.Handler;
+import core.handler.HandlerFactory;
 
 public class MessageHandler {
 
+	private HandlerFactory _factory;
 	private Handler _handler;
 	private List<Object> _objects;
 	
@@ -17,6 +19,7 @@ public class MessageHandler {
 	
 	public MessageHandler(ClientConnection connection, long id) {
 		_objects = new ArrayList<Object>();
+		_factory = new HandlerFactory();
 		
 		_connection = connection;
 		_id = id;
@@ -27,7 +30,7 @@ public class MessageHandler {
 	}
 	
 	public void handler(Message message) {
-		_handler = message.getHandler();
+		_handler = _factory.getHandlerInstance(message.getHandler());
 		
 		_objects.add(0, _connection);
 		_objects.add(1, _id);

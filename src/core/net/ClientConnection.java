@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.util.ArrayList;
 
-import core.handler.DisconnectHandler;
-
 public class ClientConnection extends Thread {
 	
 	private Socket _socket;
@@ -58,6 +56,6 @@ public class ClientConnection extends Thread {
 				exit = true;
 			}
 		}
-		_messageHandler.handler(new Message(new DisconnectHandler(), new ArrayList<Object>()));
+		_messageHandler.handler(new Message("DISCONNECT", new ArrayList<Object>()));
 	}
 }

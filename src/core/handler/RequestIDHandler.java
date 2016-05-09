@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.handler.Handler;
-import core.handler.clientSideCopy.RequestID_RET;
 import core.net.ClientConnection;
 import core.net.Message;
 
@@ -20,7 +19,7 @@ public class RequestIDHandler extends Handler {
 		contents.add(id);
 		
 		try {
-			connection.write(new Message(new RequestID_RET(), contents));
+			connection.write(new Message("REQUEST_ID_RET", contents));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import core.handler.Handler;
-
 public class Message {
 
-	private Handler _handler;
+	private String _handler;
 	private List<Object> _contents;
 	
-	public Message(Handler handler, List<Object> contents) {
+	public Message(String handler, List<Object> contents) {
 		this._handler = handler;
 		this._contents = contents;
 	}
@@ -24,7 +22,7 @@ public class Message {
 		_contents = msg.getContents();
 	}
 	
-	public Handler getHandler() {
+	public String getHandler() {
 		return _handler;
 	}
 	
