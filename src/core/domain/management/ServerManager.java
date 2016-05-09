@@ -49,6 +49,8 @@ public class ServerManager extends Thread {
 				c = new Client(id, t);
 				//Add um client na lista de clientes
 				_listOfClients.put(id, c);
+				//Add o ServerManager ao messageHandler
+				t.getMessageHandler().setServerManager(this);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -20,6 +20,10 @@ public class ClientConnection extends Thread {
 		_messageHandler = new MessageHandler(this, id);
 	}
 	
+	public MessageHandler getMessageHandler() {
+		return _messageHandler;
+	}
+	
 	public void connect() throws IOException {
 		_inputFromClient = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
 		_outputToClient = new DataOutputStream(_socket.getOutputStream());

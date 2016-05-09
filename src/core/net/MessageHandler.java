@@ -32,9 +32,10 @@ public class MessageHandler {
 	public void handler(Message message) {
 		_handler = _factory.getHandlerInstance(message.getHandler());
 		
-		_objects.add(0, _connection);
-		_objects.add(1, _id);
-		_objects.add(2, _serverManager);
+		_objects.clear();
+		_objects.add(_connection);
+		_objects.add(_id);
+		_objects.add(_serverManager);
 		_objects.addAll(message.getContents());
 		
 		_handler.handle(_objects);
