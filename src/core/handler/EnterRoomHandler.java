@@ -2,14 +2,24 @@ package core.handler;
 
 import java.util.List;
 
+import core.domain.management.Room;
+import core.domain.management.ServerManager;
 import core.handler.Handler;
 
 public class EnterRoomHandler extends Handler {
 
 	@Override
 	public void handle(List<Object> content) {
-		// TODO Auto-generated method stub
-
+		long roomID = (long) content.get(3);
+		long playerID = (long) content.get(1);
+		ServerManager server = (ServerManager) content.get(2);
+		
+		try{
+			server.getRoom(roomID).addPlayer(server.getClient(playerID).getPlayerInfo());
+		}catch(Exception e){
+			
+		}
+		
 	}
 
 }

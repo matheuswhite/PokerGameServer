@@ -32,6 +32,12 @@ public class ServerManager extends Thread {
 		_listOfRooms.put(id, new Room(id, smallBlindValue, minimumBuyIn));
 		
 	}
+	public Room getRoom(long id){
+		return _listOfRooms.get(id);
+	}
+	public Client getClient(long id){
+		return _listOfClients.get(id);
+	}
 	
 	@Override
 	public void run() {
