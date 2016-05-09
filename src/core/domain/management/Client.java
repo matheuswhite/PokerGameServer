@@ -1,7 +1,6 @@
 package core.domain.management;
 
 import core.domain.game.PlayerInfo;
-import core.domain.messageHandler.MessageHandler;
 import core.net.ClientConnection;
 
 public class Client {
@@ -10,20 +9,14 @@ public class Client {
 	private PlayerInfo _playerInfo;
 	private Long _currentRoomId;
 	private ClientConnection _clientSocket;
-	private Thread _socketThread;
 	private ClientState _clientState;
 	
 	public Client(long id, ClientConnection clientSocket) {
 		_id = id;
 		_playerInfo = new PlayerInfo(id);
-		_clientSocket = clientSocket;
 		_currentRoomId = null;
-		_socketThread = new Thread(_clientSocket, "Client" + id);
-		_socketThread.start();
-	}
-	
-	public void addMessageHandler(MessageHandler handler) {
-		_clientSocket.addObserver(handler);
+		_clientSocket = clientSocket;
+		_clientSocket.start();
 	}
 	
 	public PlayerInfo getPlayerInfo() {

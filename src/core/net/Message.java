@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import core.handler.Handler;
+
 public class Message {
 
-	private double _version;
-	private String _handler;
+	private Handler _handler;
 	private List<Object> _contents;
 	
-	public Message(double version, String handler, List<Object> contents) {
-		this._version = version;
+	public Message(Handler handler, List<Object> contents) {
 		this._handler = handler;
 		this._contents = contents;
 	}
@@ -20,16 +20,11 @@ public class Message {
 		Gson gson = new Gson();
 		Message msg = gson.fromJson(jsonString, Message.class);
 		
-		_version = msg.getVersion();
 		_handler = msg.getHandler();
 		_contents = msg.getContents();
 	}
 	
-	public double getVersion() {
-		return _version;
-	}
-	
-	public String getHandler() {
+	public Handler getHandler() {
 		return _handler;
 	}
 	

@@ -5,15 +5,21 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
-import java.util.Observable;
+import java.util.ArrayList;
 
-public class ClientConnection extends Observable implements Runnable {
+import core.handler.DisconnectHandler;
+
+public class ClientConnection extends Thread {
+	
 	private Socket _socket;
 	private BufferedReader _inputFromClient;
 	private DataOutputStream _outputToClient;
 	
-	public ClientConnection(Socket connectionSocket) {
+	private MessageHandler _messageHandler;
+	
+	public ClientConnection(Socket connectionSocket, long id) {
 		_socket = connectionSocket;
+		_messageHandler = new MessageHandler(this, id);
 	}
 	
 	public void connect() throws IOException {
@@ -38,9 +44,7 @@ public class ClientConnection extends Observable implements Runnable {
 		if (clientMessage == null)
 			throw new IOException("Client disconnected");
 		
-		setChanged();
-		notifyObservers(new Message(clientMessage));
-		
+		_messageHandler.handler(new Message(clientMessage));
 	}
 	
 	@Override
@@ -54,11 +58,6 @@ public class ClientConnection extends Observable implements Runnable {
 				exit = true;
 			}
 		}
-		createDisconnectMessage();
-	}
-	
-	private void createDisconnectMessage() {
-		Message message = new Message(1.0, "DISCONNECT_MESSAGE", null);
-		notifyObservers(message);
+		_messageHandler.handler(new Message(new DisconnectHandler(), new ArrayList<Object>()));
 	}
 }
