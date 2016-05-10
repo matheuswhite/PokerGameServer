@@ -21,6 +21,10 @@ public class EndTurnHandler extends Handler {
 		Room room = server.getRoom(server.getClient(playerID).getCurrentRoomId());
 		room.getMatchInfo().increasePotValue(moneyAdd);
 
+		//Se for o final do jogo mandar para todos qual é o vencedor
+		// new Message("WINNER", PlayerInfo);
+		
+		
 		//Se a phase do jogo mudou mandar para todos os jogadores
 		// new Message("CHANGE_PHASE", MatchInfo);
 		
