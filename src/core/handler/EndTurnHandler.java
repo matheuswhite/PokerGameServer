@@ -24,10 +24,10 @@ public class EndTurnHandler extends Handler {
 		Room room = server.getRoom(server.getClient(playerID).getCurrentRoomId());
 		room.getMatchInfo().increasePotValue(moneyAdd);
 
-		//Atualizar as informações do do turno
-		//Ex.: atualizar o pivô, a 'fase' da partida (PRE_FLOP, FLOP, TURN, RIVER, ...), etc. 
+		//Se a phase do jogo mudou mandar para todos os jogadores
+		// new Message("CHANGE_PHASE", MatchInfo);
 		
-		//Enviar a todos os jogadores da sala que o jogador acabou o turno
+		//Senão, enviar a todos os jogadores da sala que o jogador acabou o turno
 		//e o proximo estado da sala
 		//Ex.: new Message("END_TURN", MatchInfo);
 		

@@ -15,9 +15,10 @@ public class UpdateMoneyHandler extends Handler {
 		
 		//Enviar a todos os jogadores da sala a ação deste jogador
 		//e o proximo estado da sala
-		//Ex.: new Message("CALL", MatchInfo);
-		//	   new Message("RAISE", MatchInfo, moneyBet);
-		//	   new Message("BUY_IN", MatchInfo, money);
+		//Ex.: new Message("CALL", PlayerInfo, moneyBet); {Só mande esta se o dinheiro apostado for maior que zero}
+		//	   new Message("RAISE", PlayerInfo, moneyBet);
+		//	   new Message("BUY_IN", PlayerInfo, money);
+		//	   new Message("FOLD", PlayerInfo);
 	}
 
 }
