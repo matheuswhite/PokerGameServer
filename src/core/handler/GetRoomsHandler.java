@@ -19,6 +19,8 @@ public class GetRoomsHandler extends Handler {
 		List<Object> send = new ArrayList<Object>();
 		send.add(server.getAllRooms());
 		
+		//Alterar o nome para "GET_ROOMS_RET" 
+		//e enviar somente as salas dentro do range recebido
 		Message msg = new Message("GET_ROOM_RET", send);
 		try{
 			client.write(msg);

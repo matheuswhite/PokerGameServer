@@ -11,6 +11,9 @@ public class EndTurnHandler extends Handler {
 
 	@Override
 	public void handle(List<Object> content) {
+		
+		//Esta classe so trata a passagem de turno do jogador
+		//Essas ações são feitas pela classe UpdateMoneyHandler
 		String action = (String) content.get(3);
 		Money moneyAdd = (Money) content.get(4);
 		long playerID = (long) content.get(1);
@@ -20,6 +23,13 @@ public class EndTurnHandler extends Handler {
 		
 		Room room = server.getRoom(server.getClient(playerID).getCurrentRoomId());
 		room.getMatchInfo().increasePotValue(moneyAdd);
+
+		//Se a phase do jogo mudou mandar para todos os jogadores
+		// new Message("CHANGE_PHASE", MatchInfo);
+		
+		//Senão, enviar a todos os jogadores da sala que o jogador acabou o turno
+		//e o proximo estado da sala
+		//Ex.: new Message("END_TURN", MatchInfo);
 		
 	}
 

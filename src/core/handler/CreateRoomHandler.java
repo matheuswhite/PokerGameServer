@@ -27,6 +27,8 @@ public class CreateRoomHandler extends Handler {
 			e.printStackTrace();
 		}
 
+		
+		//enviar a room criada de volta para o cliente "CREATE_ROOM_RET"
 	}
 
 }

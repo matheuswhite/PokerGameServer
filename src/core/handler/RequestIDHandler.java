@@ -13,6 +13,7 @@ public class RequestIDHandler extends Handler {
 	@Override
 	public void handle(List<Object> content) {
 		ClientConnection connection = (ClientConnection) content.get(0);
+		//Fazer o cast com Double (problemas com JSON)
 		long id = (long) content.get(1);
 		
 		List<Object> contents = new ArrayList<Object>();
