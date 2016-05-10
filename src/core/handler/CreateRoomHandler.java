@@ -17,6 +17,8 @@ public class CreateRoomHandler extends Handler {
 		
 		server.createRoom(smallBlindValue, minimumBuyIn);
 
+		
+		//enviar a room criada de volta para o cliente "CREATE_ROOM_RET"
 	}
 
 }
