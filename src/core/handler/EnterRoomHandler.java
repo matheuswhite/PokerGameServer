@@ -21,6 +21,10 @@ public class EnterRoomHandler extends Handler {
 			
 		}
 		
+		
+		//Se o numero de jogadores aumentar para 2
+		//enviar new Message("START_GAME", PlayerInfo, MatchInfo);
+		//Se não, enviar new Message("JOIN", PlayerInfo);
 	}
 
 }

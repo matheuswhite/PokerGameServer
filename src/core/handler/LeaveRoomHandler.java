@@ -16,7 +16,9 @@ public class LeaveRoomHandler extends Handler {
 		server.getRoom(roomID).removePlayer(server.getClient(playerID).getPlayerInfo());
 		
 
-
+		//Enviar a todos os jogadores da sala que este jogador saiu da sala
+		//e o proximo estado da sala
+		//Ex.: new Message("LEAVE", PlayerInfo);
 	}
 
 }
