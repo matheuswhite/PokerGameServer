@@ -28,9 +28,9 @@ public class UpdateMoneyHandler extends Handler {
 		
 		if(action == "FOLD"){
 			//Espaco para invocar a funcao playerFold() em matchinfo ou Room
-			error
+			server.getClient(playerID).getPlayerInfo().setInGame();
 			
-		}else{
+		}{
 			Money moneyAdd = (Money) content.get(4);
 			room.getMatchInfo().increasePotValue(moneyAdd);
 		}

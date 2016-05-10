@@ -15,11 +15,8 @@ public class EndTurnHandler extends Handler {
 		//Esta classe so trata a passagem de turno do jogador
 		//Essas ações são feitas pela classe UpdateMoneyHandler
 		long playerID = (long) content.get(1);
-		ServerManager server = (ServerManager) content.get(2);
-	
-		
-		Room room = server.getRoom(server.getClient(playerID).getCurrentRoomId());
-		room.getMatchInfo().increasePotValue(moneyAdd);
+		ServerManager server = (ServerManager) content.get(2);		
+
 
 		//Se for o final do jogo mandar para todos qual é o vencedor
 		// new Message("WINNER", PlayerInfo);
@@ -31,7 +28,6 @@ public class EndTurnHandler extends Handler {
 		//Senão, enviar a todos os jogadores da sala que o jogador acabou o turno
 		//e o proximo estado da sala
 		//Ex.: new Message("END_TURN", MatchInfo);
-		
 	}
 
 }
