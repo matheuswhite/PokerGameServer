@@ -3,6 +3,7 @@ package core.domain.management;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.domain.game.Deck;
 import core.domain.game.MatchInfo;
 import core.domain.game.Money;
 import core.domain.game.PlayerInfo;
@@ -12,6 +13,8 @@ public class Room {
 	private long _id;
 	private List<PlayerInfo> _listOfPlayers;
 	private MatchInfo _matchInfo;
+	private Deck _deck;
+	
 	public final static int ROOM_CAPACITY = 6;
 	
 	public Room(long id, Money smallBlindValue, Money minimumBuyIn) {
