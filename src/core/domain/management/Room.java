@@ -15,6 +15,14 @@ public class Room {
 	private MatchInfo _matchInfo;
 	private Deck _deck;
 	
+	public Deck get_deck() {
+		return _deck;
+	}
+
+	public void set_deck(Deck _deck) {
+		this._deck = _deck;
+	}
+
 	public final static int ROOM_CAPACITY = 6;
 	
 	public Room(long id, Money smallBlindValue, Money minimumBuyIn) {
