@@ -36,6 +36,25 @@ public class Room {
 		return _listOfPlayers;
 	}
 	
+	public PlayerInfo nextPlayer(long id){
+		int i = 0;
+		boolean founded = false;	
+		
+		while(i < ROOM_CAPACITY && !founded && i < _listOfPlayers.size()){
+			if(_listOfPlayers.get(i).getId() == id)
+				founded = true;
+			++i;
+		}
+		
+		if(founded){
+			if(i == _listOfPlayers.size())
+				i=0;
+			return _listOfPlayers.get(i);
+		}
+		return null;
+
+	}
+	
 	public MatchInfo getMatchInfo() {
 		return _matchInfo;
 	}
