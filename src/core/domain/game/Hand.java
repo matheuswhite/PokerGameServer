@@ -1,57 +1,43 @@
 package core.domain.game;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Hand {
 
-	private Card[] _tableCards;
-	private Card[] _playerCards;
-	private Card _highCard;
-	private List<Card> _kickers;
-	private HandRank _handRank;
+	private ArrayList<Card> _playerCards;
+	//Ira Representar os melhores Hanks se houver
+	//[HC][FP][SP][ToK][S][F][FoK][SF]
+	private ArrayList<Card> _betterCards;
+	private ArrayList<Card> _comboHand;
 	
-	public Hand(Card[] tableCards, Card[] playerCards) {
-		if (tableCards.length != 5 || playerCards.length != 2)
+	public Hand(ArrayList<Card> playerCards) {
+		if (playerCards.size() != 2)
 			throw new IllegalArgumentException("Number of cards invalid");
-
-		_tableCards = tableCards;
 		_playerCards = playerCards;
-		_kickers = new LinkedList<Card>();
+		_betterCards = new ArrayList<Card>();
+		_comboHand = new ArrayList<Card>();
+		addSlots(_betterCards, 8);
+		addSlots(_comboHand, 5);
+		int compNum = playerCards.get(0).compareTo(playerCards.get(1));
+		if(compNum == 0){
+			_betterCards
+			_betterCards.set(1, )
+		}else if()
 	}
 	
-	public Card[] getTableCards() {
-		return _tableCards;
+	public void addSlots(ArrayList<Card> cards, int Size){
+		cards.clear();
+		for(int i = 0; i < Size ; ++i){
+			cards.add(null);
+		}
+	}
+	public void dump(ArrayList<Card> cards, int Size){
+		for(int i = 0; i < Size ; ++i){
+			cards.set(i,null);
+		}
 	}
 	
-	public Card[] getPlayerCards() {
-		return _playerCards;
-	}
 	
-	public Card getHighCard() {
-		return _highCard;
-	}
-	
-	public List<Card> getKickers() {
-		return _kickers;
-	}
-	
-	public HandRank getHandRank() {
-		return _handRank;
-	}
-	
-	public void setHighCard(Card highCard) {
-		_highCard = highCard;
-	}
-	
-	public void setKickers(List<Card> kickers) {
-		if (kickers.size() > 4)
-			throw new IllegalArgumentException("Number of cards invalid");
-		
-		_kickers = kickers;
-	}
-	
-	public void setHandRank(HandRank handRank) {
-		_handRank = handRank;
-	}
 }
