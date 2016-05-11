@@ -33,10 +33,17 @@ public class UpdateMoneyHandler extends Handler {
 			
 		}else{
 			moneyAdd = _gson.fromJson((String)content.get(4), Money.class);
-			room.getMatchInfo().increasePotValue(moneyAdd);
-			moneyAdd.addMoney(server.getClient(playerID).getPlayerInfo().getMoneyBetting());
-			server.getClient(playerID).getPlayerInfo().setMoneyBetting(moneyAdd);
 			
+			if (action != ActionType.BUY_IN) {
+				room.getMatchInfo().increasePotValue(moneyAdd);
+				moneyAdd.addMoney(moneyAdd);
+				server.getClient(playerID).getPlayerInfo().setMoneyBetting(moneyAdd);
+				
+				if (room.getMatchInfo().getHigherCurrentBet().parseToLong() < server.getClient(playerID).getPlayerInfo().getMoneyBetting().parseToLong()) {
+					room.getMatchInfo().setHigherCurrentBet(server.getClient(playerID).getPlayerInfo().getMoneyBetting());
+				}
+					
+			}
 		}
 		
 		newContent.add(room.getMatchInfo());
@@ -47,13 +54,6 @@ public class UpdateMoneyHandler extends Handler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//Enviar a todos os jogadores da sala a ação deste jogador
-		//e o proximo estado da sala
-		//Ex.: new Message("CALL", PlayerInfo, moneyBet); {Só mande esta se o dinheiro apostado for maior que zero}
-		//	   new Message("RAISE", PlayerInfo, moneyBet);
-		//	   new Message("BUY_IN", PlayerInfo, money);
-		//	   new Message("FOLD", PlayerInfo);
 	}
 
 }

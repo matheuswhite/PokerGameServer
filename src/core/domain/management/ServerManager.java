@@ -30,10 +30,16 @@ public class ServerManager extends Thread {
 		this.start();
 	}
 	
-	public void createRoom(Money smallBlindValue, Money minimumBuyIn){
+	public Room createRoom(Money smallBlindValue, Money minimumBuyIn){
 		long id = _numGenRoom.genId();
-		_listOfRooms.put(id, new Room(id, smallBlindValue, minimumBuyIn));
+		Room room = new Room(id, smallBlindValue, minimumBuyIn);
+		_listOfRooms.put(id, room);
 		
+		return room;
+	}
+	public void removeRoom(long roomId) {
+		_listOfRooms.remove(_listOfRooms.get(roomId));
+		_numGenRoom.removeId(roomId);
 	}
 	public Room getRoom(long id){
 		return _listOfRooms.get(id);
@@ -43,6 +49,10 @@ public class ServerManager extends Thread {
 	}
 	public Client getClient(long id){
 		return _listOfClients.get(id);
+	}
+	public void removeClient(long id) {
+		_listOfClients.remove(_listOfClients.get(id));
+		_numGenClient.removeId(id);
 	}
 	public void sendPlayersInRoom(long id, Message msg) throws IOException{
 		List<PlayerInfo> players = getRoom(id).getPlayers();

@@ -13,7 +13,7 @@ public class Client {
 	
 	public Client(long id, ClientConnection clientSocket) {
 		_id = id;
-		_playerInfo = new PlayerInfo(id);
+		_playerInfo = null;
 		_currentRoomId = null;
 		_clientSocket = clientSocket;
 		_clientSocket.start();
@@ -21,6 +21,10 @@ public class Client {
 	
 	public PlayerInfo getPlayerInfo() {
 		return _playerInfo;
+	}
+	
+	public void setPlayerInfo(PlayerInfo playerInfo) {
+		_playerInfo = playerInfo;
 	}
 	
 	public ClientState getCurrentClientState() {
@@ -35,7 +39,7 @@ public class Client {
 		return _currentRoomId;
 	}
 	
-	public void setCurrentRoomId(long id) {
+	public void setCurrentRoomId(Long id) {
 		_currentRoomId = id;
 	}
 	
