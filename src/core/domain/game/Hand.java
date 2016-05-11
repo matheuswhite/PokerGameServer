@@ -12,17 +12,28 @@ public class Hand {
 	private ArrayList<Integer> _betterCards;
 	private ArrayList<Card> _comboHand;
 	
+
 	public Hand() {
 		_playerCards = new ArrayList<>();
 		_betterCards = new ArrayList<>();
 		_comboHand = new ArrayList<>();
 	}
 	public Hand(ArrayList<Card> playerCards) {
+		this();
+		putCard(playerCards);
+	}
+	public Hand(Card card[]) {
+		this();
+		ArrayList<Card> playerCards = new ArrayList<>();
+		playerCards.add(card[0]);
+		playerCards.add(card[1]);
+		putCard(playerCards);
+		
+	}
+	public void putCard(ArrayList<Card> playerCards){
 		if (playerCards.size() != 2)
 			throw new IllegalArgumentException("Number of cards invalid");
 		_playerCards = playerCards;
-		_betterCards = new ArrayList<>();
-		_comboHand = new ArrayList<>();
 		addSlots(_betterCards, 8);
 		addSlots(_comboHand, 5);
 		
