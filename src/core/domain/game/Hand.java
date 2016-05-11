@@ -334,8 +334,8 @@ public class Hand {
 	
 	public ArrayList<Card> takeCards(ArrayList<Card> cards, ArrayList<Integer> especific){
 		ArrayList<Card> aux = new ArrayList<>();
-		for(int i=0, j=0; i<cards.size() ;++i){
-			if(i == especific.get(j) && j < especific.size()){
+		for(int i=0, j=0; i<cards.size() && j < especific.size() ;++i){
+			if(i == especific.get(j)){
 				aux.add(cards.get(i));
 				++j;
 			}
