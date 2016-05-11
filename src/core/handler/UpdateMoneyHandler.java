@@ -18,25 +18,26 @@ public class UpdateMoneyHandler extends Handler {
 		
 		long playerID = (long) content.get(1);
 		ServerManager server = (ServerManager) content.get(2);
-		String action = (String) content.get(3);	
+		ActionType action = _gson.fromJson((String)content.get(3), ActionType.class);	
 		
 		Room room = server.getRoom(server.getClient(playerID).getCurrentRoomId());
 		
 		@SuppressWarnings("rawtypes")
 		List newContent = new ArrayList<Object>();
 		newContent.add(server.getClient(playerID).getPlayerInfo());
+		Money moneyAdd = new Money();
 		
-		if(action == "FOLD"){
+		if(action == ActionType.FOLD){
 			//Espaco para invocar a funcao playerFold() em matchinfo ou Room
 			server.getClient(playerID).getPlayerInfo().setInGame();
 			
-		}{
-			Money moneyAdd = (Money) content.get(4);
+		}else{
+			moneyAdd = _gson.fromJson((String)content.get(4), Money.class);
 			room.getMatchInfo().increasePotValue(moneyAdd);
 		}
 		
 		newContent.add(room.getMatchInfo());
-		Message msg = new Message(action, newContent);
+		Message msg = new Message(action.toString(), newContent);
 		try {
 			server.sendPlayersInRoom(room.getId(),msg);
 		} catch (IOException e) {
