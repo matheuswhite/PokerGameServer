@@ -34,7 +34,7 @@ public class CreateRoomHandler extends Handler {
 		contents.add(room);
 		
 		try {
-			client.write(new Message("CREATE_ROOM_RET", content));
+			client.write(new Message("CREATE_ROOM_RET", contents));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
