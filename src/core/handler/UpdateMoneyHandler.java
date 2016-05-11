@@ -34,6 +34,9 @@ public class UpdateMoneyHandler extends Handler {
 		}else{
 			moneyAdd = _gson.fromJson((String)content.get(4), Money.class);
 			room.getMatchInfo().increasePotValue(moneyAdd);
+			moneyAdd.addMoney(server.getClient(playerID).getPlayerInfo().getMoneyBetting());
+			server.getClient(playerID).getPlayerInfo().setMoneyBetting(moneyAdd);
+			
 		}
 		
 		newContent.add(room.getMatchInfo());
