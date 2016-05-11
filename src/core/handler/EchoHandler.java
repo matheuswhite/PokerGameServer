@@ -12,7 +12,7 @@ public class EchoHandler extends Handler {
 
 	@Override
 	public void handle(List<Object> content) {
-		String echoMsg = (String) content.get(3);
+		String echoMsg = _gson.fromJson((String)content.get(3), String.class);
 		String echoRetMsg = "Yes. I can hear you client " + content.get(1);
 		ClientConnection connection = (ClientConnection) content.get(0);
 		List<Object> contents = new ArrayList<Object>();

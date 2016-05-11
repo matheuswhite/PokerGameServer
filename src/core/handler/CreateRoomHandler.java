@@ -12,8 +12,8 @@ public class CreateRoomHandler extends Handler {
 	public void handle(List<Object> content) {		
 		ServerManager server = (ServerManager) content.get(2);
 		
-		Money smallBlindValue = (Money) content.get(3);
-		Money minimumBuyIn = (Money) content.get(4);
+		Money smallBlindValue = _gson.fromJson((String)content.get(3), Money.class);
+		Money minimumBuyIn = _gson.fromJson((String)content.get(4), Money.class);
 		
 		server.createRoom(smallBlindValue, minimumBuyIn);
 

@@ -1,5 +1,6 @@
 package core.net;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -7,11 +8,16 @@ import com.google.gson.Gson;
 public class Message {
 
 	private String _handler;
-	private List<Object> _contents;
+	private List<String> _contents;
 	
 	public Message(String handler, List<Object> contents) {
-		this._handler = handler;
-		this._contents = contents;
+		Gson gson = new Gson();
+		_contents = new ArrayList<String>();
+		_handler = handler;
+		
+		for (Object object : contents) {
+			_contents.add(gson.toJson(object));
+		}
 	}
 	
 	public Message(String jsonString) {
@@ -26,7 +32,7 @@ public class Message {
 		return _handler;
 	}
 	
-	public List<Object> getContents() {
+	public List<String> getContents() {
 		return _contents;
 	}
 	
