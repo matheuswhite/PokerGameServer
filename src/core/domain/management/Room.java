@@ -23,11 +23,6 @@ public class Room {
 	public long getId() {
 		return _id;
 	}
-	public PlayerInfo CompareHands(PlayerInfo A, PlayerInfo B){
-		
-		
-		
-	}
 	public void addPlayer(PlayerInfo player) throws Exception {
 		if (_listOfPlayers.size() >= ROOM_CAPACITY)
 			throw new Exception("The max capacity of the room has been reached!");
