@@ -28,6 +28,10 @@ public class Money {
 		return _prefixMultiplier;
 	}
 	
+	public long parseToLong() {
+		return (long) (_value * Math.pow(10, _prefixMultiplier.getValue()));
+	}
+	
 	public void addMoney(Money money) {
 		if (_value == 1000 && _prefixMultiplier.equals(PrefixMultiplier.TERA))
 			throw new IllegalArgumentException("The max value of money has been reached");
