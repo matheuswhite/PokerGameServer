@@ -44,6 +44,9 @@ public class MatchInfo{
 		return null;
 	}
 	
+	public void setPhase(MatchPhase phase){
+		_currentMatchPhase = phase;
+	}
 	
 	public MatchPhase getCurrentMatchPhase() {
 		return _currentMatchPhase;
