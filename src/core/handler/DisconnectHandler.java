@@ -15,10 +15,6 @@ public class DisconnectHandler extends Handler {
 
 	@Override
 	public void handle(List<Object> content) {
-		//Esta classe é acionada quando um jogador se desconecta do servidor
-		//funciona de forma parecida que o leave_room, porém temos que retirar
-		//ele da lista de clientes e liberar o id dele.
-		
 		ClientConnection connection = (ClientConnection) content.get(0);
 		long playerID = (long) content.get(1);
 		ServerManager server = (ServerManager) content.get(2);
@@ -44,6 +40,14 @@ public class DisconnectHandler extends Handler {
 					room.getMatchInfo().setPhase(MatchPhase.WAIT_PLAYERS);
 
 					//enviar mensagem ChangePhase(WAIT_Player)
+					List<Object> changePhaseContents = new ArrayList<Object>();
+					changePhaseContents.add(room.getMatchInfo());
+					try {
+						connection.write(new Message("CHANGE_PHASE", changePhaseContents));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 				
 				try {

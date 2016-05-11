@@ -40,6 +40,14 @@ public class LeaveRoomHandler extends Handler {
 				room.getMatchInfo().setPhase(MatchPhase.WAIT_PLAYERS);
 
 				//enviar mensagem ChangePhase(WAIT_Player)
+				List<Object> changePhaseContents = new ArrayList<Object>();
+				changePhaseContents.add(room.getMatchInfo());
+				try {
+					connection.write(new Message("CHANGE_PHASE", changePhaseContents));
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 			try {
