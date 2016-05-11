@@ -3,10 +3,13 @@ package core.domain.management;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import core.domain.game.Money;
+import core.domain.game.PlayerInfo;
 import core.net.ClientConnection;
+import core.net.Message;
 import core.service.NumberGenerator;
 
 public class ServerManager extends Thread {
@@ -40,6 +43,15 @@ public class ServerManager extends Thread {
 	}
 	public Client getClient(long id){
 		return _listOfClients.get(id);
+	}
+	public void sendPlayersInRoom(long id, Message msg) throws IOException{
+		List<PlayerInfo> players = getRoom(id).getPlayers();
+		
+		for(int i=0; i < players.size(); ++i){
+			
+			Client player = getClient(players.get(i).getId());
+			player.getClientSocket().write(msg);
+		}
 	}
 	
 	@Override
