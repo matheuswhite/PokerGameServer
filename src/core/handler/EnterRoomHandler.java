@@ -47,8 +47,12 @@ public class EnterRoomHandler extends Handler {
 			contents.clear();
 			List<PlayerInfo> playerInfos = server.getRoom(roomID).getPlayers();
 			
+			contents.add(2);
+			
 			//Distribuindo as cartas
+			server.getRoom(roomID).set_deck(new Deck());
 			Deck deck = server.getRoom(roomID).get_deck();
+			deck.shuffle();
 			
 			Card[] hand0 = new Card[2];
 			hand0[0] = deck.getCard();
@@ -63,8 +67,8 @@ public class EnterRoomHandler extends Handler {
 			//"setando" a flag InGame como true
 			playerInfos.get(0).setInGame();
 			playerInfos.get(1).setInGame();
-			content.add(playerInfos.get(0));
-			content.add(playerInfos.get(1));
+			contents.add(playerInfos.get(0));
+			contents.add(playerInfos.get(1));
 			
 			//Iniciando as informações da sala
 			MatchInfo matchInfo = server.getRoom(roomID).getMatchInfo();
@@ -72,9 +76,10 @@ public class EnterRoomHandler extends Handler {
 			matchInfo.setBigBlindPlayerId(playerInfos.get(0).getId());
 			matchInfo.setSmallBlindPlayerId(playerInfos.get(1).getId());
 			matchInfo.setCurrentTurnPlayerId(playerInfos.get(1).getId());
+			matchInfo.setPivotPlayerId(playerInfos.get(1).getId());
 			matchInfo.setCurrentMatchPhase(MatchPhase.PRE_FLOP);
 			matchInfo.setHigherCurrentBet(new Money());
-			content.add(matchInfo);
+			contents.add(matchInfo);
 			
 			//Enviando a mensagem START_GAME
 			try {

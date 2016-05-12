@@ -7,6 +7,7 @@ public class MatchInfo{
 	private Long _smallBlindPlayerId;
 	private Long _bigBlindPlayerId;
 	private Long _dealerPlayerId;
+	private Long _pivotPlayerId;
 	private Card[] _cardsInTable;
 	private int _numCardsInTable;
 	private Money _smallBlindValue;
@@ -20,6 +21,7 @@ public class MatchInfo{
 		_smallBlindPlayerId = null;
 		_bigBlindPlayerId = null;
 		_dealerPlayerId = null;
+		_pivotPlayerId = null;
 		_cardsInTable = new Card[5];
 		_numCardsInTable = 0;
 		_smallBlindValue = new Money();
@@ -42,6 +44,13 @@ public class MatchInfo{
 		if(actualPhase == MatchPhase.TURN)
 			return MatchPhase.RIVER;
 		return null;
+	}
+	
+	public void setPivotPlayerId(long pivotPlayerId) {
+		_pivotPlayerId = pivotPlayerId;
+	}
+	public long getPivotPlayerId() {
+		return _pivotPlayerId;
 	}
 	
 	public void setPhase(MatchPhase phase){

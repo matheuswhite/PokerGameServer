@@ -41,8 +41,8 @@ public class UpdateMoneyHandler extends Handler {
 				
 				if (room.getMatchInfo().getHigherCurrentBet().parseToLong() < server.getClient(playerID).getPlayerInfo().getMoneyBetting().parseToLong()) {
 					room.getMatchInfo().setHigherCurrentBet(server.getClient(playerID).getPlayerInfo().getMoneyBetting());
+					room.getMatchInfo().setPivotPlayerId(playerID);
 				}
-					
 			}
 		}
 		

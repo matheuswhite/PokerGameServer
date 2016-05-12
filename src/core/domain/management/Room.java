@@ -29,6 +29,8 @@ public class Room {
 		_id = id;
 		_matchInfo = new MatchInfo(smallBlindValue, minimumBuyIn);
 		_listOfPlayers = new ArrayList<PlayerInfo>(ROOM_CAPACITY);
+		_deck = new Deck();
+		_deck.shuffle();
 	}
 	
 	public long getId() {
